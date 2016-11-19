@@ -55,7 +55,7 @@ SynthDef(\sine, { |amp = 0.5, freq = 440|
 Compiling this code would produce a file called sine.scsyndef (in the supercollider synthdefs folder) that can be later loaded 
 into scsynth and controlled by SC, like this:
 
-sine = sc.Synth( "sine" )
+sine = sc.Synth( "sine", args=["freq", 600, "amp", 0.5] )
 sine.freq = 444
 sine.amp = 0.9
 ... and so on ...
