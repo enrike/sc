@@ -79,9 +79,12 @@ class OSCMessage:
         if typehint == 'b':
             binary = OSCBlob(argument)
         else:
+            if type(argument) == type([]) and len(argument) == 0:
+                return
             binary = OSCArgument(argument)
 
-        self.typetags = self.typetags + binary[0]
+        if len(binary) > 0:
+            self.typetags = self.typetags + binary[0]
         self.rawAppend(binary[1])
 
     def rawAppend(self, data):
@@ -181,10 +184,19 @@ def OSCArgument(next):
     elif type(next) == type(13):
         binary  = struct.pack(">i", next)
         tag = "i"
+    elif type(next) == type([]):
+        binary = []
+        tag = []
+        for element in next:
+            t, b = OSCArgument(element)
+            binary.append(b)
+            tag.append(t)
+        binary = ''.join(binary)
+        tag = ''.join(tag)
     else:
+        sys.stderr.write("unsupported type, ignoring argument: " + str(next))
         binary  = ""
         tag = ""
-
     return (tag, binary)
 
 
