@@ -147,7 +147,7 @@ class Synth(object) :
     """
     loadedSynthdefs = []
     
-    def __init__(self, stringdefname='', nodeID=-1, addAction=1, addTargetID=0) : #, args=[] ) :
+    def __init__(self, stringdefname='', nodeID=-1, addAction=1, addTargetID=0, filePath=None) : #, args=[] ) :
         
         if nodeID == -1 :
             server.synthpool.check()
@@ -155,8 +155,11 @@ class Synth(object) :
             print self.nodeID, '< created node id'
         else :
             self.nodeID = nodeID
-            
-        self.defpath = os.path.join( synthdefpath, stringdefname+'.scsyndef' ) # the sc synth abs path
+
+        synthDefinition = os.path.join(synthdefpath, stringdefname+'.scsyndef')
+        if filePath is not None:
+            synthDefinition = os.path.expanduser(filePath)
+        self.defpath = synthDefinition # the sc synth abs path
         
         if Synth.loadedSynthdefs.count(self.defpath) == 0 : # already loaded?
             if os.path.isfile( self.defpath ) :
