@@ -147,7 +147,7 @@ class Synth(object) :
     """
     loadedSynthdefs = []
     
-    def __init__(self, stringdefname='', nodeID=-1, addAction=1, addTargetID=0, filePath=None) : #, args=[] ) :
+    def __init__(self, stringdefname='', nodeID=-1, addAction=1, addTargetID=0, filePath=None, args=[]):
         
         if nodeID == -1 :
             server.synthpool.check()
@@ -170,7 +170,7 @@ class Synth(object) :
             else :
                 print 'error : synthdef %s file does NOT exist' % self.defpath
             
-        server.sendMsg('/s_new', stringdefname, self.nodeID, addAction, addTargetID)
+        server.sendMsg('/s_new', stringdefname, self.nodeID, addAction, addTargetID, args)
         
         
     def __setattr__(self, item, value):
