@@ -12,8 +12,8 @@ sndpath = os.path.join( os.getcwd() , 'sounds' )
 synthdefpath = os.path.join( os.getcwd() , 'synthdefs' )
 
 
-def start( exedir='', port=57110, inputs=2, outputs=2, samplerate=44100, verbose=0,
-           spew=0, startscsynth=0 ) :
+def start( exedir='', port=57110, inputs=21, outputs=2, samplerate=44100, verbose=0,
+           spew=0, startscsynth=0, firstAutoID=1000) :
     """ starts scsynth process. interfaces scsynth module.
     Inits the OSC communication and classes that handle it
     exe='', exedir='', port=57110, inputs=2, outputs=2, samplerate=44100, verbose=0, spew=0
@@ -43,6 +43,7 @@ def start( exedir='', port=57110, inputs=2, outputs=2, samplerate=44100, verbose
                 #samplerate = samplerate,
                 verbose = verbose,
                 spew = spew,
+                firstAutoID=firstAutoID
                 )
     
     if startscsynth : # starts scsynth server process

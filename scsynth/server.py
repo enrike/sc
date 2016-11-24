@@ -36,11 +36,11 @@ class _Server(scosc.Controller):
     
     proc = None
 
-    def __init__(self, addr, verbose=False):
+    def __init__(self, addr, verbose=False, firstAutoID=1000):
         scosc.Controller.__init__(self, addr, verbose)
         self.audiobuspool = pool.IntPool(29)
         self.controlbuspool = pool.IntPool(0)
-        self.synthpool = pool.IntPool(1000) 
+        self.synthpool = pool.IntPool(firstAutoID) 
         self.bufferpool = pool.IntPool(0)
         
     def quit(self):
@@ -56,9 +56,9 @@ class _Server(scosc.Controller):
             self.kill()
 
 
-def connect(iphost='localhost', port=57110, verbose=False, spew=False):
+def connect(iphost='localhost', port=57110, verbose=False, spew=False, firstAutoID=1000):
     ip = socket.gethostbyname(iphost)
-    s = _Server((ip, port), verbose)
+    s = _Server((ip, port), verbose, firstAutoID)
     s.spew = spew
     #s.sendMsg('/status', 1)
     #s.receive('status.reply')
@@ -68,7 +68,7 @@ def connect(iphost='localhost', port=57110, verbose=False, spew=False):
 def start( #exe = 'scsynth', exedir = '/Applications/SuperCollider',
           port = 57110,
           #inputs = 2, outputs = 2, samplerate = 48000,
-          verbose = False, spew = False,
+          verbose = False, spew = False, firstAutoID=1000
           ) :
 ##    instance = process.start_local(exe, exedir, port,
 ##                                   inputs, outputs, samplerate, 
@@ -76,7 +76,7 @@ def start( #exe = 'scsynth', exedir = '/Applications/SuperCollider',
 ##                                    )
     import time
     time.sleep(1)
-    s = connect('127.0.0.1', port, verbose=verbose, spew=spew)
+    s = connect('127.0.0.1', port, verbose=verbose, spew=spew, firstAutoID=firstAutoID)
 ##    s.instance = 0 # instance
     return s
 
